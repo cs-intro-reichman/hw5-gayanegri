@@ -126,8 +126,17 @@ public class Wordle {
                 
                 if (guess.length() != 5 /* ... check if the guess is valid */) {
                     System.out.println("Invalid word. Please try again.");
-                } else {
-                    valid = true;
+                } else { 
+                    boolean caps = true;
+                    for(int i = 0; i < 5 && caps ; i++){
+                        if (guess.charAt(i) < 'A' || guess.charAt(i) > 'Z'){
+                             System.out.println("Invalid word. Please try again.");
+                            caps = false; 
+                        }
+                    }
+                    if(caps) {
+                        valid = true;
+                    }
                 }
             }
 
