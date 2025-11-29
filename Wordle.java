@@ -3,13 +3,8 @@ public class Wordle {
     // Reads all words from dictionary filename into a String array.
     public static String[] readDictionary(String filename) {
         In in = new In(filename);
-        String[] words = new String[258];
-        for(int i = 0; i < 258; i++){
-            words[i] = in.readString();
-        }
+        String[] words = in.readAllStrings();
         return words;
-
-		// ...
     }
 
     // Choose a random secret word from the dictionary. 
@@ -59,7 +54,7 @@ public class Wordle {
 	// guesses[2][3] // 'L'
 	// guesses[2][4] // 'O'
     public static void storeGuess(String guess, char[][] guesses, int row) {
-        for(int i = 0; i < guess.length(); i++){
+        for(int i = 0; i < guesses[row].length; i++){
             guesses[row][i] = guess.charAt(i);
         }
 		// ...
@@ -126,22 +121,15 @@ public class Wordle {
             while (!valid) {
                 System.out.print("Enter your guess (5-letter word): ");
                 guess = inp.readString(); // ... read from the standrad input
+
                 
                 if (guess.length() != 5) {
                     System.out.println("Invalid word. Please try again.");
                 } else { 
-                    boolean caps = true;
-                    for(int i = 0; i < 5 && caps ; i++){
-                        if (guess.charAt(i) < 'A' || guess.charAt(i) > 'Z'){
-                             System.out.println("Invalid word. Please try again.");
-                            caps = false; 
-                        }
-                    }
-                    if(caps) {
-                        valid = true;
-                    }
+                    valid = true;
                 }
             }
+            
 
             storeGuess(guess, guesses, attempt);
             computeFeedback(secret, guess, results[attempt]);
