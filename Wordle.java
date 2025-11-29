@@ -84,6 +84,9 @@ public class Wordle {
 
     // Returns true if all entries in resultRow are 'G'.
     public static boolean isAllGreen(char[] resultRow) {
+        if (resultRow.length == 0) {
+            return false;
+        }
         for(int i = 0; i < resultRow.length; i++){
             if (resultRow[i] != 'G'){
                 return false;  
@@ -105,8 +108,8 @@ public class Wordle {
         String secret = chooseSecretWord(dict);
 
         // Prepare 2D arrays for guesses and results
-        char[][] guesses = new char[6][5]; 
-        char[][] results = new char[6][5]; 
+        char[][] guesses = new char[MAX_ATTEMPTS][WORD_LENGTH]; 
+        char[][] results = new char[MAX_ATTEMPTS][WORD_LENGTH]; 
 
         // Prepare to read from the standart input 
         In inp = new In();
@@ -124,7 +127,7 @@ public class Wordle {
                 System.out.print("Enter your guess (5-letter word): ");
                 guess = inp.readString(); // ... read from the standrad input
                 
-                if (guess.length() != 5 /* ... check if the guess is valid */) {
+                if (guess.length() != 5) {
                     System.out.println("Invalid word. Please try again.");
                 } else { 
                     boolean caps = true;
@@ -159,8 +162,9 @@ public class Wordle {
         }
 
         if (!won) {
-           System.out.println("Sorry, you did not guess the word.");
-           System.out.println("The secret word was: " + secret); // ... follow the assignment examples for how the printing should look like
+            System.out.println();
+            System.out.println("Sorry, you did not guess the word.");
+            System.out.println("The secret word was: " + secret); // ... follow the assignment examples for how the printing should look like
         }
 
         inp.close();
